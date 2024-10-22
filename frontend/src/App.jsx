@@ -7,7 +7,8 @@ import Demo from './pages/Demo';
 import Pricing from './pages/Pricing';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Invoice from './pages/Invoice';  // Import Invoice Page
+import Invoice from './pages/Invoice'; // Import Invoice Page
+import Chatbot from './components/Chatbot'; // Import Chatbot Component
 
 const App = () => {
     return (
@@ -20,8 +21,9 @@ const App = () => {
                     <Route path="/register" element={<Register />} />
                     <Route path="/demo" element={<Demo />} />
                     <Route path="/pricing" element={<Pricing />} />
-                    <Route path="/invoice" element={<Invoice />} />  {/* Invoice Route */}
+                    <Route path="/invoice" element={<Invoice />} /> {/* Invoice Route */}
                 </Routes>
+                <Chatbot /> {/* Place the Chatbot component here */}
             </main>
             <Footer />
         </div>
