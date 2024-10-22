@@ -1,20 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Login from './pages/Login';
 import Register from './pages/Register';
-import Invoice from './pages/Invoice';
-import CompanyInfo from './pages/CompanyInfo';
+import Demo from './pages/Demo';
+import Pricing from './pages/Pricing';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Invoice from './pages/Invoice';  // Import Invoice Page
 
-function App() {
+const App = () => {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/invoice" element={<Invoice />} />
-                <Route path="/company-info" element={<CompanyInfo />} />
-            </Routes>
-        </Router>
+        <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-grow">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/demo" element={<Demo />} />
+                    <Route path="/pricing" element={<Pricing />} />
+                    <Route path="/invoice" element={<Invoice />} />  {/* Invoice Route */}
+                </Routes>
+            </main>
+            <Footer />
+        </div>
     );
-}
+};
 
 export default App;

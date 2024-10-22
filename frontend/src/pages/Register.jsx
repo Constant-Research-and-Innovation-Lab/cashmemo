@@ -1,51 +1,52 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const Register = () => {
-    const [formData, setFormData] = useState({
+    const [userData, setUserData] = useState({
         email: '',
         nid: '',
         tradeLicense: '',
-        role: 'supplier',
+        role: '',
         name: '',
         storeLocation: '',
         phoneNumber: '',
-        tin: '',
+        TIN: ''
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setUserData({ ...userData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:5000/api/users', formData);
-            console.log('User registered:', response.data);
-        } catch (error) {
-            console.error('Error registering user:', error.response.data);
-        }
+        // Send data to the backend
+        const response = await fetch('/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+        const data = await response.json();
+        console.log(data);
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Register</h1>
-            <form onSubmit={handleSubmit}>
-                <input type="email" name="email" placeholder="Email" required onChange={handleChange} className="block border p-2 mb-2 w-full" />
-                <input type="text" name="nid" placeholder="NID" required onChange={handleChange} className="block border p-2 mb-2 w-full" />
-                <input type="text" name="tradeLicense" placeholder="Trade License" onChange={handleChange} className="block border p-2 mb-2 w-full" />
-                <select name="role" onChange={handleChange} className="block border p-2 mb-2 w-full">
-                    <option value="supplier">Supplier</option>
-                    <option value="wholesaler">Wholesaler</option>
-                </select>
-                <input type="text" name="name" placeholder="Name" required onChange={handleChange} className="block border p-2 mb-2 w-full" />
-                <input type="text" name="storeLocation" placeholder="Store Location" onChange={handleChange} className="block border p-2 mb-2 w-full" />
-                <input type="text" name="phoneNumber" placeholder="Phone Number" onChange={handleChange} className="block border p-2 mb-2 w-full" />
-                <input type="text" name="tin" placeholder="TIN" onChange={handleChange} className="block border p-2 mb-2 w-full" />
-                <button type="submit" className="bg-blue-500 text-white p-2">Register</button>
-            </form>
-        </div>
+        <form className="p-4" onSubmit={handleSubmit}>
+            <h2 className="text-2xl mb-4">Register</h2>
+            <input name="email" placeholder="Email" onChange={handleChange} required className="border mb-2 p-2 w-full" />
+            <input name="nid" placeholder="NID" onChange={handleChange} required className="border mb-2 p-2 w-full" />
+            <input name="tradeLicense" placeholder="Trade License" onChange={handleChange} className="border mb-2 p-2 w-full" />
+            <select name="role" onChange={handleChange} required className="border mb-2 p-2 w-full">
+                <option value="">Select Role</option>
+                <option value="supplier">Supplier</option>
+                <option value="wholesaler">Wholesaler</option>
+            </select>
+            <input name="name" placeholder="Name" onChange={handleChange} required className="border mb-2 p-2 w-full" />
+            <input name="storeLocation" placeholder="Store Location" onChange={handleChange} className="border mb-2 p-2 w-full" />
+            <input name="phoneNumber" placeholder="Phone Number" onChange={handleChange} className="border mb-2 p-2 w-full" />
+            <input name="TIN" placeholder="TIN" onChange={handleChange} className="border mb-2 p-2 w-full" />
+            <button type="submit" className="bg-blue-500 text-white p-2 rounded">Register</button>
+        </form>
     );
 };
 
