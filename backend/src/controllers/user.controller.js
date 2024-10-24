@@ -4,7 +4,6 @@ import { User } from "../models/user.model.js";
 import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 
 // Function to generate access and refresh tokens for a user
 const generateAccessAndRefreshTokens = async (userId) => {
@@ -258,11 +257,30 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, updatedUser, "Cover image updated successfully"));
 });
 
-// Get user channel profile
+// Get user shop profile
 const getUserShopDetails = asyncHandler(async (req, res) => {
- return null
+    const user = await User.findById(req.user._id).select("-password");
+
+    if (!user || !user.shop) {
+        throw new ApiError(404, "Shop details not found");
+    }
+
+    return res.status(200).json(new ApiResponse(200, user.shop, "User shop details fetched successfully"));
 });
 
+
+const getAllInvoices = asyncHandler(async (req, res) => {
+    const userId = req.user._id; // Get the user ID from the request
+
+    const invoices = await Invoice.find({ user: userId }) // Assuming there's a user field in your Invoice schema
+        .populate('items.product') // Optionally populate product details if you have a reference to a product model
+        .sort({ createdAt: -1 }); // Sort by creation date, descending
+
+    return res.status(200).json(new ApiResponse(200, invoices, "Invoices fetched successfully"));
+});
+
+
+// Exporting all functions
 export {
     registerUser,
     loginUser,
@@ -274,4 +292,5 @@ export {
     updateUserAvatar,
     updateUserCoverImage,
     getUserShopDetails,
+    getAllInvoices
 };

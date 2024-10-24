@@ -49,6 +49,10 @@ const userSchema = new Schema({
     shops: [{ // Array of references to Shop model
         type: mongoose.Schema.Types.ObjectId,
         ref: "Shop"
+    }],
+    invoices: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Invoice' // Assuming you have an Invoice model
     }]
 
 

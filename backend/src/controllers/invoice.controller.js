@@ -1,5 +1,6 @@
 import { Invoice } from "../models/invoice.model.js";
 import { Stock } from "../models/stock.model.js";
+import {asyncHandler} from "../utils/asyncHandler.js";
 
 // Create an Invoice (Buy or Sell Product)
 const createInvoice = async (req, res) => {
@@ -113,10 +114,26 @@ const deleteInvoice = async (req, res) => {
         res.status(500).json({ message: "Error deleting invoice.", error: error.message });
     }
 };
+const getInvoiceById = asyncHandler(async (req, res) => {
+    const { id } = req.params; // Get the invoice ID from the request parameters
+
+    const invoice = await Invoice.findById(id) // Find the invoice by ID
+        .populate('items.product') // Optionally populate product details if you have a reference to a product model
+        .lean(); // Use lean to return plain JavaScript objects instead of Mongoose documents
+
+    if (!invoice) {
+        throw new ApiError(404, "Invoice not found"); // Throw an error if the invoice is not found
+    }
+
+    return res.status(200).json(new ApiResponse(200, invoice, "Invoice fetched successfully"));
+});
+
+
 
 export {
     createInvoice,
     getInvoiceDetails,
     updateInvoice,
     deleteInvoice,
+    getInvoiceById,
 };

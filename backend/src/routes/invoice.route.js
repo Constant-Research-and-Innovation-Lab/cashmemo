@@ -2,7 +2,6 @@ import { Router } from "express";
 import {
     createInvoice,
     getInvoiceById,
-    getAllInvoices,
     updateInvoice,
     deleteInvoice,
 } from "../controllers/invoice.controller.js";
@@ -13,7 +12,6 @@ const router = Router();
 // Secured Routes for Invoice Management
 router.route("/")
     .post(verifyJWT, createInvoice)  // Create a new invoice
-    .get(verifyJWT, getAllInvoices); // Get all invoices
 
 router.route("/:id")
     .get(verifyJWT, getInvoiceById)  // Get specific invoice by ID
