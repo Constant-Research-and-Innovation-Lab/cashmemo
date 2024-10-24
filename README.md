@@ -34,6 +34,9 @@ Follow these steps to get Cashmemo up and running on your local machine.
 
 Cashmemo is not just an invoice generator; it's a reliable business record keeper. Every transaction, from invoices to expenses and payments, is securely recorded. This detailed record-keeping functionality aids in decision-making, audits, analysis, and future planning.
 
+
+
+
 ## Contributing
 
 Contributions are welcome! Follow these steps to contribute:

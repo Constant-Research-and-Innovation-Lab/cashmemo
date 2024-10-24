@@ -1,9 +1,36 @@
-import express from 'express'
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express()
 
-app.get('/', (req, res) => {
-    res.send('hello world')
-})
+app.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true
+}))
 
-export {app }
+app.use(express.json({limit: "16kb"}))
+app.use(express.urlencoded({extended:true,limit:"16kb"}))
+app.use(express.static("public"))
+app.use(cookieParser())
+
+
+// importing routes
+
+import userRouter from './routes/user.route.js'
+import shopRoutes from "./routes/shop.route.js";
+import invoiceRoute from "./routes/invoice.route.js"
+
+
+
+
+// routes declaration
+
+app.use("/api/v1/users", userRouter)
+
+app.use("/api/shops", shopRoutes);
+
+
+
+
+export { app };
