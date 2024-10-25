@@ -1,6 +1,12 @@
-# Cashmemo - B2B Invoice Generator and Business Record Keeper
+# Cashmemo - B2B Invoice Generator and Business Record Keeper ( Designed for supply chain management)
 
-Cashmemo is a comprehensive solution for B2B invoicing and business record-keeping. This platform streamlines invoice generation, client management, and expense tracking, ensuring businesses have the tools they need for efficient financial management.
+CashMemo is a web application designed to tackle the frequent price hikes in Bangladesh by aligning with the 17th Sustainable Development Goal (SDG): to strengthen the means of implementation and revitalize the Global Partnership for Sustainable Development. CashMemo simplifies trading and enhances government monitoring of the supply chain. It generates cash memos for every purchase made by wholesalers, who will be registered by verifying their IDs and trade licenses. Wholesalers can customize their shop details, including logo, name, location, and phone number.
+
+When wholesalers sell a product, the application captures price, quantity, and buyer information. An integrated AI system, trained with local business laws and fine-tuned for our specific use case, will assist business owners in quickly accessing necessary information. This AI will enhance decision-making and operational efficiency.
+
+To effectively address the issue of price hikes, we plan to collaborate with the government for implementation. This partnership will ensure that every transaction is tracked and rules are enforced to prevent illegal trade without a proper cash memo. The system will provide a comprehensive record of all purchase information for an organization, enabling better oversight and transparency.
+
+In summary, CashMemo leverages technology to simplify trading for wholesalers while equipping the government with essential tools to monitor and regulate the supply chain effectively. By combining advanced functionality with strategic collaboration, CashMemo aims to impact Bangladesh's economic stability significantly.
 
 ## Features
 
