@@ -21,9 +21,9 @@ const generateAccessAndRefreshTokens = async (userId) => {
 
 // User registration
 const registerUser = asyncHandler(async (req, res) => {
-    const { fullName, email, username, password } = req.body;
+    const { fullName, email, username, password, role } = req.body;
 
-    if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
+    if ([fullName, email, username, password, role].some((field) => field?.trim() === "")) {
         throw new ApiError(400, "All fields are required");
     }
 
@@ -40,29 +40,42 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Avatar file is required");
     }
 
-    const avatar = await uploadOnCloudinary(avatarLocalPath);
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    let avatar, coverImage;
+    try {
+        avatar = await uploadOnCloudinary(avatarLocalPath);
+        coverImage = coverImageLocalPath ? await uploadOnCloudinary(coverImageLocalPath) : null;
 
-    if (!avatar) {
-        throw new ApiError(400, "Error while uploading avatar");
+        if (!avatar) {
+            throw new ApiError(400, "Error while uploading avatar");
+        }
+
+        const user = await User.create({
+            fullName,
+            avatar: avatar.url,
+            coverImage: coverImage?.url || "",
+            email,
+            password,
+            role,
+            username: username.toLowerCase(),
+        });
+
+        const createdUser = await User.findById(user._id).select("-password -refreshToken");
+
+        if (!createdUser) {
+            throw new ApiError(500, "Something went wrong while registering the user");
+        }
+
+        return res.status(201).json(new ApiResponse(200, createdUser, "User registered successfully"));
+    } catch (error) {
+        // Cleanup: Delete uploaded files from Cloudinary if user creation fails
+        if (avatar) {
+            await deleteFromCloudinary(avatar.public_id);
+        }
+        if (coverImage) {
+            await deleteFromCloudinary(coverImage.public_id);
+        }
+        throw error;
     }
-
-    const user = await User.create({
-        fullName,
-        avatar: avatar.url,
-        coverImage: coverImage?.url || "",
-        email,
-        password,
-        username: username.toLowerCase(),
-    });
-
-    const createdUser = await User.findById(user._id).select("-password -refreshToken");
-
-    if (!createdUser) {
-        throw new ApiError(500, "Something went wrong while registering the user");
-    }
-
-    return res.status(201).json(new ApiResponse(200, createdUser, "User registered successfully"));
 });
 
 // User login

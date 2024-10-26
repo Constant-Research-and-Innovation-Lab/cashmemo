@@ -30,6 +30,8 @@ app.use("/api/v1/users", userRouter)
 
 app.use("/api/shops", shopRoutes);
 
+app.use("/api/invoices", invoiceRoute);
+
 
 
 
