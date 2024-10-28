@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "CashMemo Backend",
-  "main": "server.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon -r dotenv/config --experimental-json-modules src/server.js",
