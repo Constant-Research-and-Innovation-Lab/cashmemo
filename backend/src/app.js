@@ -22,6 +22,13 @@ import shopRoutes from "./routes/shop.route.js";
 import invoiceRoute from "./routes/invoice.route.js"
 
 
+// Public routes
+
+app.get("/", (req, res) => { 
+    res.send("Hello from cashmemo api. Everything is working fine."); 
+
+});
+
 
 
 // routes declaration

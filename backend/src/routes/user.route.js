@@ -20,7 +20,7 @@ const router = Router();
 // Public routes
 
 router.route("/").get((req, res) => {
-    res.send("Hello from user route");
+    res.send("Hello from user route. Everything is working fine");
 });
 
 
