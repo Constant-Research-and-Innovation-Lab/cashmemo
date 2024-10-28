@@ -38,7 +38,15 @@ const userSchema = new Schema({
     coverImage:{
         type: String // cloudinary url
     },
-
+    tradeLicense:{
+        type: String,
+    },
+    nid:{
+        type: String,
+    },
+    location:{
+        type: String,
+    },
     password:{
         type: String,
         required: [true, "Password is required"]

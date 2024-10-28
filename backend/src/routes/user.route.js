@@ -17,6 +17,13 @@ import { verifyJWT } from "../middlewares/auth.middlewares.js";
 
 const router = Router();
 
+// Public routes
+
+router.route("/").get((req, res) => {
+    res.send("Hello from user route");
+});
+
+
 router.route("/register").post(
     upload.fields([
         {
