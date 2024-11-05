@@ -25,7 +25,7 @@ const userSchema = new Schema({
         enum: ['supplier', 'wholesaler']
 
     },
-    fullName: {
+    name: {
         type:String,
         required: true,
         trim:true,
